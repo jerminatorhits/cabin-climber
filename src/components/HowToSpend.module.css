@@ -1,0 +1,5 @@
+.section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-padding); box-shadow: var(--shadow); margin-bottom: 1.5rem; }
+.section h2 { font-size: var(--text-xl); font-weight: var(--font-semibold); margin: 0 0 0.5rem; }
+.intro { font-size: var(--text-sm); color: var(--text-secondary); margin: 0 0 0.75rem; }
+.steps { margin: 0; padding-left: 1.25rem; font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; }
+.steps li { margin-bottom: 0.5rem; }

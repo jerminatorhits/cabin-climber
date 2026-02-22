@@ -1,0 +1,12 @@
+.section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-padding); box-shadow: var(--shadow); margin-bottom: 1.5rem; }
+.section h2 { font-size: var(--text-xl); font-weight: var(--font-semibold); margin: 0 0 0.5rem; }
+.intro { font-size: var(--text-sm); color: var(--text-secondary); margin: 0 0 0.5rem; }
+.range { font-size: var(--text-sm); margin-bottom: 1rem; }
+.range strong { color: var(--accent); }
+.tableWrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+.table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.table th, .table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); background: var(--bg-elevated); }
+.table th { font-weight: var(--font-medium); color: var(--text-muted); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.04em; }
+.table tr:last-child td { border-bottom: none; }
+.num { font-variant-numeric: tabular-nums; }
+.note { color: var(--text-muted); font-size: 0.8125rem; }

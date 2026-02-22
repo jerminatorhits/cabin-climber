@@ -1,0 +1,10 @@
+.section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-padding); box-shadow: var(--shadow); margin-bottom: 1.5rem; }
+.section h2 { font-size: var(--text-xl); font-weight: var(--font-semibold); margin: 0 0 0.5rem; }
+.intro { font-size: var(--text-sm); color: var(--text-secondary); margin: 0 0 1rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.card { padding: 1rem; background: var(--bg-elevated); border-radius: var(--radius); border: 1px solid var(--border); }
+.label { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; }
+.value { font-size: 1.25rem; font-weight: var(--font-semibold); }
+.points { font-size: var(--text-sm); color: var(--text-secondary); }
+.takeaway { font-size: var(--text-sm); color: var(--text-secondary); margin: 0; }
+.takeaway strong { color: var(--accent); }

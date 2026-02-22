@@ -1,0 +1,10 @@
+.section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--card-padding); box-shadow: var(--shadow); margin-bottom: 1.5rem; }
+.section h2 { font-size: var(--text-xl); font-weight: var(--font-semibold); margin: 0 0 0.5rem; }
+.intro { font-size: var(--text-sm); color: var(--text-secondary); margin: 0 0 1rem; }
+.form { margin-bottom: 0.5rem; }
+.form label { display: block; font-size: var(--text-sm); margin-bottom: 0.25rem; }
+.row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.input { padding: 0.5rem 0.75rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text); font-size: 1rem; min-width: 8rem; }
+.btn { padding: 0.5rem 1rem; background: var(--accent); color: var(--text); border: none; border-radius: var(--radius); font-weight: var(--font-semibold); }
+.btn:hover { background: var(--accent-hover); }
+.current { font-size: var(--text-sm); color: var(--text-muted); margin: 0; }

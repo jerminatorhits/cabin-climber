@@ -1,0 +1,2 @@
+.footer { margin-top: 2rem; padding: 1rem 0; border-top: 1px solid var(--border); }
+.text { font-size: var(--text-xs); color: var(--text-muted); margin: 0; }
