@@ -1,0 +1,119 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  max-width: 22rem;
+  width: 100%;
+  box-shadow: var(--shadow);
+}
+
+.close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+.close:hover { color: var(--text); }
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  margin: 0 0 1.25rem;
+  color: var(--text);
+}
+
+.social { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.btnSocial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+}
+.btnSocial:hover { background: var(--border); }
+.btnIcon { font-size: 1rem; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.form { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.75rem; }
+.input {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+.input::placeholder { color: var(--text-muted); }
+.input:focus { outline: none; border-color: var(--accent); }
+
+.btnPrimary {
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  margin-top: 0.25rem;
+}
+.btnPrimary:hover { background: var(--accent-hover); }
+
+.error {
+  font-size: var(--text-xs);
+  color: #f87171;
+  margin: 0 0 0.5rem;
+}
+
+.toggle { font-size: var(--text-sm); color: var(--text-secondary); margin: 0; }
+.linkBtn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}
+.linkBtn:hover { color: var(--accent-hover); }

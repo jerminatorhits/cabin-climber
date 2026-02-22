@@ -27,3 +27,24 @@
 }
 .navbar__link:hover { color: var(--text); text-decoration: none; }
 .navbar__link.active { color: var(--accent); }
+
+.navbar__auth { display: flex; align-items: center; gap: 0.75rem; margin-left: 0.5rem; }
+.navbar__user {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  max-width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.navbar__btn {
+  padding: 0.35rem 0.75rem;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.navbar__btn:hover { background: var(--accent-hover); }
