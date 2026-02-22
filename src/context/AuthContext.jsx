@@ -6,7 +6,6 @@ import {
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   GoogleAuthProvider,
-  OAuthProvider,
 } from 'firebase/auth'
 import { auth, isAuthEnabled } from '../lib/firebase'
 
@@ -38,17 +37,6 @@ export function AuthProvider({ children }) {
       await signInWithPopup(auth, new GoogleAuthProvider())
     } catch (err) {
       setError(err.message || 'Google sign-in failed')
-    }
-  }, [])
-
-  const signInWithApple = useCallback(async () => {
-    if (!auth) return
-    setError(null)
-    try {
-      const provider = new OAuthProvider('apple.com')
-      await signInWithPopup(auth, provider)
-    } catch (err) {
-      setError(err.message || 'Apple sign-in failed')
     }
   }, [])
 
@@ -89,7 +77,6 @@ export function AuthProvider({ children }) {
     clearError,
     isAuthEnabled: isAuthEnabled(),
     signInWithGoogle,
-    signInWithApple,
     signInWithEmail,
     signUpWithEmail,
     signOut,

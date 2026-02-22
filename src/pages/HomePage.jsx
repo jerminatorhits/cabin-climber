@@ -43,7 +43,7 @@ export default function HomePage() {
           <li className={styles.step}>
             <span className={styles.stepNum}>4</span>
             <div>
-              <strong>Track your progress.</strong> Set a points goal, add cards you're working on, and log spend or existing points—all saved in your browser.
+              <strong>Track your progress.</strong> Set a points goal, add cards you're working on, and log spend or existing points. Sign in to save across devices.
             </div>
           </li>
         </ol>

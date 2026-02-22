@@ -4,8 +4,15 @@ import GoalTracker from '../components/GoalTracker'
 import ProgressSummary from '../components/ProgressSummary'
 import GlobalMap from '../components/GlobalMap'
 import { useTracking } from '../context/TrackingContext'
+import { useAuth } from '../context/AuthContext'
 import { recommendedCards } from '../data/cards'
 import styles from './DashboardPage.module.css'
+
+function saveHint(isAuthEnabled, user) {
+  if (!isAuthEnabled) return 'Progress is saved in this browser.'
+  if (user) return 'Progress is saved to your account.'
+  return 'Sign in to save your progress across devices.'
+}
 
 function pointsFromCard(entry, card) {
   if (!card) return 0
@@ -15,6 +22,7 @@ function pointsFromCard(entry, card) {
 }
 
 export default function DashboardPage() {
+  const { isAuthEnabled, user } = useAuth()
   const {
     targetPoints,
     setTargetPoints,
@@ -48,7 +56,7 @@ export default function DashboardPage() {
       <GlobalMap progress={progressPct} />
 
       <p className={styles.intro}>
-        Your personal progress toward a Tokyo business class trip. Set a points goal, add cards you're working on, and log spend or existing points. Everything is saved in this browser.
+        Your personal progress toward a Tokyo business class trip. Set a points goal, add cards you're working on, and log spend or existing points. {saveHint(isAuthEnabled, user)}
       </p>
 
       <ProgressSummary

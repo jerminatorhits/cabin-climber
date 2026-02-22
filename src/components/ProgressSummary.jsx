@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { recommendedCards } from '../data/cards'
+import { useAuth } from '../context/AuthContext'
 import styles from './ProgressSummary.module.css'
 
 function progressPct(current, target) {
@@ -7,7 +8,14 @@ function progressPct(current, target) {
   return Math.min(100, Math.round((current / target) * 100))
 }
 
+function saveMessage(isAuthEnabled, user) {
+  if (!isAuthEnabled) return 'Your progress is saved in this browser.'
+  if (user) return 'Your progress is saved to your account.'
+  return 'Sign in to save your progress across devices.'
+}
+
 export default function ProgressSummary({ targetPoints, myCards, existingPoints, onScrollToGoal, onScrollToTracker }) {
+  const { isAuthEnabled, user } = useAuth()
   const currentPoints = useMemo(() => {
     let fromCards = 0
     for (const entry of myCards) {
@@ -30,7 +38,7 @@ export default function ProgressSummary({ targetPoints, myCards, existingPoints,
     return (
       <aside className={styles.summary} role="region" aria-label="Points progress">
         <p className={styles.cta}>
-          <strong>Track your progress.</strong> Set a points goal, add cards you’re working on, and log existing points. Your progress is saved in this browser.
+          <strong>Track your progress.</strong> Set a points goal, add cards you’re working on, and log existing points. {saveMessage(isAuthEnabled, user)}
         </p>
         {onScrollToGoal && (
           <button type="button" className={styles.btn} onClick={onScrollToGoal}>

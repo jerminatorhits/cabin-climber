@@ -6,7 +6,6 @@ export default function AuthModal({ isOpen, onClose }) {
   const {
     user,
     signInWithGoogle,
-    signInWithApple,
     signInWithEmail,
     signUpWithEmail,
     error,
@@ -52,10 +51,6 @@ export default function AuthModal({ isOpen, onClose }) {
           <button type="button" className={styles.btnSocial} onClick={signInWithGoogle}>
             <span className={styles.btnIcon}>G</span>
             Continue with Google
-          </button>
-          <button type="button" className={styles.btnSocial} onClick={signInWithApple}>
-            <span className={styles.btnIcon}>🍎</span>
-            Continue with Apple
           </button>
         </div>
 
