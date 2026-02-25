@@ -19,27 +19,38 @@ function latLngToPercent(lat, lng) {
 
 const USA = { lat: 39.8283, lng: -98.5795, label: 'USA' }
 const TOKYO = { lat: 35.6762, lng: 139.6503, label: 'Tokyo' }
+// North Pacific arc (typical transpacific route over Alaska/Bering Sea)
+const ARC_NORTH = { lat: 58, lng: 180 }
+// Rotation offset so plane nose aligns with arc (emoji default varies by OS; try 0, 45, 90 if sharp)
+const PLANE_NOSE_OFFSET_DEG = 40
 
 export default function GlobalMap({ progress = 0 }) {
   const usaPos = useMemo(() => latLngToPercent(USA.lat, USA.lng), [])
   const tokyoPos = useMemo(() => latLngToPercent(TOKYO.lat, TOKYO.lng), [])
+  const arcPos = useMemo(() => latLngToPercent(ARC_NORTH.lat, ARC_NORTH.lng), [])
+
+  // Quadratic Bezier: start (USA), control (arc north), end (Tokyo). B(t) = (1-t)²P0 + 2(1-t)tP1 + t²P2
+  const pathD = useMemo(
+    () => `M ${usaPos.x} ${usaPos.y} Q ${arcPos.x} ${arcPos.y} ${tokyoPos.x} ${tokyoPos.y}`,
+    [usaPos, arcPos, tokyoPos]
+  )
 
   const planePos = useMemo(() => {
-    const t = Math.max(0, Math.min(100, progress)) / 100
-    return {
-      x: usaPos.x + (tokyoPos.x - usaPos.x) * t,
-      y: usaPos.y + (tokyoPos.y - usaPos.y) * t,
-    }
-  }, [usaPos, tokyoPos, progress])
+    const t = Math.max(0, Math.min(1, progress / 100))
+    const x = (1 - t) ** 2 * usaPos.x + 2 * (1 - t) * t * arcPos.x + t ** 2 * tokyoPos.x
+    const y = (1 - t) ** 2 * usaPos.y + 2 * (1 - t) * t * arcPos.y + t ** 2 * tokyoPos.y
+    return { x, y }
+  }, [usaPos, arcPos, tokyoPos, progress])
 
-  // Angle so the nose points along the line toward Tokyo. Derivative direction is (dx, dy).
-  // The ✈️ emoji typically has its nose pointing up; add 90° so "up" aligns with the line direction.
+  // Tangent angle along the curve at t so the plane nose is inline with the arc.
+  // B'(t) = 2(1-t)(P1-P0) + 2t(P2-P1). Emoji nose direction varies by OS; offset via PLANE_NOSE_OFFSET_DEG.
   const planeAngle = useMemo(() => {
-    const dx = tokyoPos.x - usaPos.x
-    const dy = tokyoPos.y - usaPos.y
+    const t = Math.max(0, Math.min(1, progress / 100))
+    const dx = 2 * (1 - t) * (arcPos.x - usaPos.x) + 2 * t * (tokyoPos.x - arcPos.x)
+    const dy = 2 * (1 - t) * (arcPos.y - usaPos.y) + 2 * t * (tokyoPos.y - arcPos.y)
     const rad = Math.atan2(dy, dx)
-    return (-rad * 180) / Math.PI + 38
-  }, [usaPos, tokyoPos])
+    return (rad * 180) / Math.PI + PLANE_NOSE_OFFSET_DEG
+  }, [usaPos, arcPos, tokyoPos, progress])
 
   return (
     <div className={styles.wrap}>
@@ -55,18 +66,28 @@ export default function GlobalMap({ progress = 0 }) {
           aria-hidden
         />
         <svg className={styles.overlay} viewBox="0 0 100 100" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="globalMapRouteGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="var(--accent)" />
-              <stop offset="100%" stopColor="var(--success)" />
-            </linearGradient>
-          </defs>
+          {/* Path goes USA → Tokyo. Traversed = Tokyo to plane = end of path (blue). Untraversed = USA to plane = start of path (white). */}
           <path
-            d={`M ${usaPos.x} ${usaPos.y} L ${tokyoPos.x} ${tokyoPos.y}`}
+            d={pathD}
             fill="none"
-            stroke="url(#globalMapRouteGrad)"
+            stroke="white"
             strokeWidth="0.8"
             strokeLinecap="round"
+            strokeLinejoin="round"
+            pathLength={100}
+            strokeDasharray={progress <= 0 ? '0 100' : `${progress} ${100 - progress}`}
+            strokeDashoffset={0}
+          />
+          <path
+            d={pathD}
+            fill="none"
+            stroke="#2563eb"
+            strokeWidth="0.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            pathLength={100}
+            strokeDasharray={progress >= 100 ? '0 100' : `${100 - progress} ${progress}`}
+            strokeDashoffset={progress >= 100 ? 0 : -progress}
           />
         </svg>
         <span
@@ -76,24 +97,27 @@ export default function GlobalMap({ progress = 0 }) {
             top: `${planePos.y}%`,
             transform: `translate(-50%, -50%) rotate(${planeAngle}deg)`,
           }}
+          title={`${Math.round(progress)}% of the way to Tokyo`}
           aria-hidden
         >
           ✈️
         </span>
-        <span
-          className={styles.marker}
+        <div
+          className={styles.markerWrap}
           style={{ left: `${usaPos.x}%`, top: `${usaPos.y}%` }}
           title="USA"
         >
-          USA
-        </span>
-        <span
-          className={styles.marker}
+          <span className={styles.markerTip} aria-hidden />
+          <span className={styles.marker}>USA</span>
+        </div>
+        <div
+          className={styles.markerWrap}
           style={{ left: `${tokyoPos.x}%`, top: `${tokyoPos.y}%` }}
           title="Tokyo"
         >
-          Tokyo
-        </span>
+          <span className={styles.markerTip} aria-hidden />
+          <span className={styles.marker}>Tokyo</span>
+        </div>
       </div>
     </div>
   )
