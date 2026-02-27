@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import RealFlightsSection from '../components/RealFlightsSection'
 import TokyoBizExamples from '../components/TokyoBizExamples'
 import CashVsPoints from '../components/CashVsPoints'
 import HowToSpend from '../components/HowToSpend'
@@ -11,12 +12,17 @@ export default function HomePage() {
     <main className={styles.main}>
       <section className={styles.hero}>
         <h1 className={styles.title}>Cabin Climber</h1>
-        <p className={styles.tagline}>Fly business class to Tokyo on points</p>
+        <p className={styles.tagline}>Real business class to Tokyo—on points</p>
         <p className={styles.heroIntro}>
-          Tokyo business class on points is within reach—everyday spending and a few smart cards can get you there. See what it costs, which cards help, and track your progress.
+          See real flights you can actually book. Then we’ll show you which cards get you the points and how to track your way there.
         </p>
-        <Link to="/my-progress" className={styles.cta}>Track my progress →</Link>
+        <div className={styles.ctaBlock}>
+          <Link to="/my-progress" className={styles.cta}>Track my progress →</Link>
+          <a href="#real-flights-heading" className={styles.ctaSecondary}>I have points—show me flights</a>
+        </div>
       </section>
+
+      <RealFlightsSection />
 
       <section className={styles.howItWorks} aria-labelledby="how-it-works-heading">
         <h2 id="how-it-works-heading">How it works</h2>
@@ -25,7 +31,7 @@ export default function HomePage() {
           <li className={styles.step}>
             <span className={styles.stepNum}>1</span>
             <div>
-              <strong>See what Tokyo biz costs.</strong> One-way award prices vary by airline and program; we show a rough range and real examples below.
+              <strong>See what Tokyo biz costs.</strong> One-way award prices vary by airline and program; we show a rough range and real examples above.
             </div>
           </li>
           <li className={styles.step}>
@@ -47,6 +53,19 @@ export default function HomePage() {
             </div>
           </li>
         </ol>
+      </section>
+
+      <section className={styles.section} aria-labelledby="why-heading">
+        <h2 id="why-heading">Why Cabin Climber?</h2>
+        <p className={styles.intro}>
+          We’re focused on one thing: getting you to Tokyo in business on points. Tools like seats.aero show you what’s available to book—we help you earn and track so you’re ready when you are.
+        </p>
+        <ul className={styles.valueList}>
+          <li><strong>One goal, one number.</strong> We tell you what to aim for (e.g. 75k one-way) and keep everything pointed at that target.</li>
+          <li><strong>Card strategy.</strong> Which cards to get, in what order, and how to track each bonus (spend $X in Y months) so you don’t leave points on the table.</li>
+          <li><strong>Progress you own.</strong> Set your goal, log your points and spend, and see how close you are. Your data stays yours; sign in to save across devices.</li>
+          <li><strong>Tokyo-only.</strong> No generic “travel hacking” overload—just cards and programs that actually get you to Tokyo in biz.</li>
+        </ul>
       </section>
 
       <TokyoBizExamples />

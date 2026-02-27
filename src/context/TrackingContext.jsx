@@ -49,6 +49,7 @@ export function TrackingProvider({ children }) {
   const [state, setState] = useState(() =>
     authEnabled ? defaultState : loadStateFromStorage()
   )
+  const [saveStatus, setSaveStatus] = useState('idle') // 'idle' | 'saving' | 'saved' | 'error'
   const stateOriginRef = useRef('user') // 'user' | 'firestore'
 
   // When auth is toggled on, show default until user/Firestore loads
@@ -76,13 +77,20 @@ export function TrackingProvider({ children }) {
       stateOriginRef.current = 'user'
       return
     }
+    setSaveStatus('saving')
     const progressRef = doc(db, 'progress', user.uid)
     setDoc(progressRef, {
       targetPoints: state.targetPoints,
       myCards: state.myCards,
       existingPoints: state.existingPoints,
       updatedAt: new Date().toISOString(),
-    }).catch(() => {})
+    })
+      .then(() => {
+        setSaveStatus('saved')
+      })
+      .catch(() => {
+        setSaveStatus('error')
+      })
   }, [authEnabled, user, state])
 
   // Auth disabled: persist to localStorage
@@ -139,6 +147,15 @@ export function TrackingProvider({ children }) {
     }))
   }, [])
 
+  const clearSaveStatus = useCallback(() => setSaveStatus('idle'), [])
+
+  // Auto-clear "saved" after 2s so it doesn't clutter the UI
+  useEffect(() => {
+    if (saveStatus !== 'saved') return
+    const t = setTimeout(() => setSaveStatus('idle'), 2000)
+    return () => clearTimeout(t)
+  }, [saveStatus])
+
   const value = {
     targetPoints: state.targetPoints,
     setTargetPoints,
@@ -149,6 +166,8 @@ export function TrackingProvider({ children }) {
     updateCard,
     addExisting,
     removeExisting,
+    saveStatus,
+    clearSaveStatus,
   }
 
   return (

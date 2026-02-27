@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, NavLink, Link } from 'react-router-dom'
 import { TrackingProvider } from './context/TrackingContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import AuthModal from './components/AuthModal'
 import HomePage from './pages/HomePage'
 import DashboardPage from './pages/DashboardPage'
+import PrivacyPage from './pages/PrivacyPage'
 import './App.css'
 
 function NavAuth() {
@@ -35,6 +36,7 @@ export default function App() {
     <AuthProvider>
       <TrackingProvider>
         <BrowserRouter>
+          <div className="layout">
           <header className="navbar">
             <NavLink to="/" className="navbar__brand">Cabin Climber</NavLink>
             <nav className="navbar__nav">
@@ -50,7 +52,19 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/my-progress" element={<DashboardPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
           </Routes>
+          <footer className="footer">
+            <Link to="/privacy">Privacy</Link>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSd6cre75mZPp1SjgFP-GDRhPZlDKs51ucJUrNqWx8qFy93PIQ/viewform?usp=publish-editor"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Feedback
+            </a>
+          </footer>
+          </div>
         </BrowserRouter>
       </TrackingProvider>
     </AuthProvider>

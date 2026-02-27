@@ -33,6 +33,8 @@ export default function DashboardPage() {
     addCard,
     addExisting,
     removeExisting,
+    saveStatus,
+    clearSaveStatus,
   } = useTracking()
   const goalRef = useRef(null)
   const trackerRef = useRef(null)
@@ -58,6 +60,19 @@ export default function DashboardPage() {
       <p className={styles.intro}>
         Your personal progress toward a Tokyo business class trip. Set a points goal, add cards you're working on, and log spend or existing points. {saveHint(isAuthEnabled, user)}
       </p>
+
+      {isAuthEnabled && user && saveStatus !== 'idle' && (
+        <p className={styles.saveStatus} role="status">
+          {saveStatus === 'saving' && <span className={styles.saveStatusSaving}>Saving…</span>}
+          {saveStatus === 'saved' && <span className={styles.saveStatusSaved}>Saved</span>}
+          {saveStatus === 'error' && (
+            <span className={styles.saveStatusError}>
+              Couldn't save. Check your connection and try again.
+              <button type="button" className={styles.saveStatusDismiss} onClick={clearSaveStatus} aria-label="Dismiss">×</button>
+            </span>
+          )}
+        </p>
+      )}
 
       <ProgressSummary
         targetPoints={targetPoints}
